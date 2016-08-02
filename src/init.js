@@ -1,6 +1,7 @@
 $(document).ready(function() {
   window.dancers = [];
   var lineupOn = false;
+  var memeFaces = ['<img src="./img/Jordan.png" height="100px" width="75"></img>'];
 
   $('.addDancerButton').on('click', function(event) {
     /* This function sets up the click handlers for the create-dancer
@@ -26,8 +27,10 @@ $(document).ready(function() {
     var dancer = new dancerMakerFunction(
       80 * Math.random() + '%',
       80 * Math.random() + '%',
-      Math.random() * 1000
+      Math.random() * 1000 + 1000
     );
+
+    dancer.$node.append(memeFaces[0]);
 
     window.dancers.push(dancer);
 
@@ -42,11 +45,23 @@ $(document).ready(function() {
   $('.dancerLineupButton').on('click', function(event) {
     if (!lineupOn) { 
       for (var i = 0; i < window.dancers.length; i++) {
-        window.dancers[i].setPosition(100, 100);
+        if (i < 5) {
+          window.dancers[i].setPosition(Math.random() * 100 + 300, Math.random() * 150 + 400);
+        } else if (i < 10) {
+          window.dancers[i].setPosition(Math.random() * 100 + 75, Math.random() * 150 + 825);
+        } else if (i < 20) {
+          window.dancers[i].setPosition(Math.random() * 150 + 450, Math.random() * 150 + 1100);
+
+        } else {
+          window.dancers[i].setPosition(Math.random() * 50 + 50, Math.random() * 200 + 100);
+
+        }
       }
       lineupOn = true;
     } else {
-      window.dancers[i].setPosition(window.dancers[i].top, window.dancers[i].left);
+      for (var i = 0; i < window.dancers.length; i++) {
+        window.dancers[i].setPosition(window.dancers[i].top, window.dancers[i].left);
+      }
       lineupOn = false;
     }
 

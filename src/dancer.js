@@ -14,7 +14,6 @@ Dancer.prototype.step = function() {
   // the basic dancer doesn't do anything interesting at all on each step,
   // it just schedules the next step
   setTimeout(this.step.bind(this), this.timeBetweenSteps);
-  this.setPosition(this.top, this.left);
 };
 
 Dancer.prototype.setPosition = function(top, left) {
@@ -26,7 +25,7 @@ Dancer.prototype.setPosition = function(top, left) {
     left: left
   };
   // this.$node.css(styleSettings);
-  this.$node.animate(styleSettings, 1000);
+  this.$node.animate(styleSettings, 500);
 };
 
   // now that we have defined the dancer object, we can start setting up important parts of it by calling the methods we wrote

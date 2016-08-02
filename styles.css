@@ -37,14 +37,12 @@ body, a:link, a:visited, a:active{
 }
 
 .dancer{
-  background-image: url('./img/crying_jordan_face.png');
-  background-size: contain;
 /*  border-width:10px;
   border-style: solid;
   border-color: red;
   border-radius:10px;*/
-  width: 200px;
-  height: 200px;
+  width: 0;
+  height: 0;
   position: absolute;
   display: block;
 }
