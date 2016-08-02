@@ -19,28 +19,28 @@ BlinkyDancer.prototype.step = function() {
 };
 
 
-var MovingBlinkyDancer = function(top, left, timeBetweenSteps) {
-  BlinkyDancer.call(this, top, left, timeBetweenSteps);
-  this.$node.css('background-image', 'url("src/Basketball.png")');
-  setInterval( function() {    
-    this.$node.animate({
-      left: '+=50',
-      top: '+=50',
-    }); 
-  }.bind(this), 50);
+// var MovingBlinkyDancer = function(top, left, timeBetweenSteps) {
+//   BlinkyDancer.call(this, top, left, timeBetweenSteps);
+//   this.$node.css('background-image', 'url("src/Basketball.png")');
+//   setInterval( function() {    
+//     this.$node.animate({
+//       left: '+=50',
+//       top: '+=50',
+//     }); 
+//   }.bind(this), 50);
     
-};
+// };
 
-MovingBlinkyDancer.prototype = Object.create(BlinkyDancer.prototype);
-MovingBlinkyDancer.prototype.constructor = MovingBlinkyDancer;
+// MovingBlinkyDancer.prototype = Object.create(BlinkyDancer.prototype);
+// MovingBlinkyDancer.prototype.constructor = MovingBlinkyDancer;
 
-MovingBlinkyDancer.prototype.step = function() {
-  BlinkyDancer.prototype.step.call(this);
-  // call the old version of step at the beginning of any call to this new version of step
-  // toggle() is a jQuery method to show/hide the <span> tag.
-  // See http://api.jquery.com/category/effects/ for this and
-  // other effects you can use on a jQuery-wrapped html tag.
-};
+// MovingBlinkyDancer.prototype.step = function() {
+//   BlinkyDancer.prototype.step.call(this);
+//   // call the old version of step at the beginning of any call to this new version of step
+//   // toggle() is a jQuery method to show/hide the <span> tag.
+//   // See http://api.jquery.com/category/effects/ for this and
+//   // other effects you can use on a jQuery-wrapped html tag.
+// };
 
 var ExpandingBlinkyDancer = function(top, left, timeBetweenSteps) {
   Dancer.call(this, top, left, timeBetweenSteps);
@@ -98,3 +98,25 @@ ColoredBlinkyDancer.prototype.makeColorGradient = function(frequency1, frequency
   }).call(this);
 };
 
+var Basketball = function(top, left, timeBetweenSteps) {
+  Dancer.call(this, top, left, timeBetweenSteps);
+  this.$node.addClass('basketball'); 
+  this.setPosition(top, left);
+  this.i = 0;
+  this.bounce = false;
+};
+
+Basketball.prototype = Object.create(Dancer.prototype);
+Basketball.prototype.constructor = Basketball;
+
+Basketball.prototype.step = function() {
+
+  Dancer.prototype.step.call(this);
+  if (this.bounce) {
+    this.$node.animate({'top': this.top+50}, this.timeBetweenSteps);
+    this.bounce = false;
+  } else {
+    this.$node.animate({'top': this.top-50}, this.timeBetweenSteps);
+    this.bounce = true;
+  }
+};

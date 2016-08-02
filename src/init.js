@@ -3,9 +3,16 @@ $(document).ready(function() {
   var lineupOn = false;
   var memeFaces = ['<img src="./img/Jordan.png" height="100" width="75"></img>', '<img src="./img/Lebron.png" height="100" width="100"></img>', '<img src="./img/Yao.gif" height="100" width="75"></img>', '<img src="./img/Curry.png" height="100" width="80"></img>', '<img src="./img/Chalmers.png" height="100" width="75"></img>','<img src="./img/Basketball.png" height="100" width="100"></img>'];
   var memeSelector = function() {
-    return Math.floor(Math.random() * 6);
+    return Math.floor(Math.random() * 5);
   };
-
+  $('.addBasketballButton').on('click', function(event) {
+    var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
+    // get the maker function for the kind of dancer we're supposed to make
+    var dancerMakerFunction = window[dancerMakerFunctionName];
+    var basketball = new dancerMakerFunction(300, 650, 500);
+    basketball.$node.append(memeFaces[5]);
+    $('body').append(basketball.$node);
+  });
   $('.addDancerButton').on('click', function(event) {
 
     var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
