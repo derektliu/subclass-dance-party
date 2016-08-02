@@ -7,7 +7,6 @@ body{
   max-height: 960px;
   max-width: 1440px;
   font-size: 18px;
-  /*background-image: url('https://i.vimeocdn.com/video/460516322_1280x720.jpg');*/
   background-image: url('./img/warriors_court.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -15,6 +14,15 @@ body{
 }
 body, a:link, a:visited, a:active{
   color: lightblue;
+}
+
+span.dancer {
+    -webkit-animation: spin 2s infinite linear;
+}
+
+@-webkit-keyframes spin {
+    0%  {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(360deg);}   
 }
 
 .title, .addDancerButton{
@@ -37,12 +45,8 @@ body, a:link, a:visited, a:active{
 }
 
 .dancer{
-/*  border-width:10px;
-  border-style: solid;
-  border-color: red;
-  border-radius:10px;*/
-  width: 0;
-  height: 0;
+  width: 1;
+  height: 1;
   position: absolute;
   display: block;
 }
@@ -51,14 +55,12 @@ body, a:link, a:visited, a:active{
   border:100px solid blue;
   border-radius: 100px;
 }
-.lineup {
+/*.lineup {
   display: flex;
   position: relative;
   top: 50%;
   left: 50%;
-  /*text-align: center;*/
   height: 0px;
   width: 0px;
-  /*justify-content: space-between;*/
   align-content: space-between;
-}
+}*/

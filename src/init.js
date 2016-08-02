@@ -4,19 +4,7 @@ $(document).ready(function() {
   var memeFaces = ['<img src="./img/Jordan.png" height="100px" width="75"></img>'];
 
   $('.addDancerButton').on('click', function(event) {
-    /* This function sets up the click handlers for the create-dancer
-     * buttons on dancefloor.html. You should only need to make one small change to it.
-     * As long as the "data-dancer-maker-function-name" attribute of a
-     * class="addDancerButton" DOM node matches one of the names of the
-     * maker functions available in the global scope, clicking that node
-     * will call the function to make the dancer.
-     */
 
-    /* dancerMakerFunctionName is a string which must match
-     * one of the dancer maker functions available in global scope.
-     * A new object of the given type will be created and added
-     * to the stage.
-     */
     var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
 
     // get the maker function for the kind of dancer we're supposed to make
@@ -31,41 +19,41 @@ $(document).ready(function() {
     );
 
     dancer.$node.append(memeFaces[0]);
-
     window.dancers.push(dancer);
+    console.log(lineupOn);
+    lineUp(dancer, window.dancers.length-1);
 
-    if (lineupOn) {
-      $('.lineup').append(dancer.$node);
-    } else {
-      $('body').append(dancer.$node);
-    }
+    $('body').append(dancer.$node);
 
   });
   
   $('.dancerLineupButton').on('click', function(event) {
-    if (!lineupOn) { 
-      for (var i = 0; i < window.dancers.length; i++) {
-        if (i < 5) {
-          window.dancers[i].setPosition(Math.random() * 100 + 300, Math.random() * 150 + 400);
-        } else if (i < 10) {
-          window.dancers[i].setPosition(Math.random() * 100 + 75, Math.random() * 150 + 825);
-        } else if (i < 20) {
-          window.dancers[i].setPosition(Math.random() * 150 + 450, Math.random() * 150 + 1100);
-
-        } else {
-          window.dancers[i].setPosition(Math.random() * 50 + 50, Math.random() * 200 + 100);
-
-        }
-      }
+    if (!lineupOn) {
       lineupOn = true;
+
     } else {
-      for (var i = 0; i < window.dancers.length; i++) {
-        window.dancers[i].setPosition(window.dancers[i].top, window.dancers[i].left);
-      }
       lineupOn = false;
     }
+    for (var i = 0; i < window.dancers.length; i++) {
+      lineUp(window.dancers[i], i);
+    }
+    
 
   });
 
+  var lineUp = function(dancer, length) {
+    if (lineupOn) { 
+      if (length < 5) {
+        dancer.setPosition(Math.random() * 100 + 300, Math.random() * 150 + 400);
+      } else if (length < 10) {
+        dancer.setPosition(Math.random() * 100 + 75, Math.random() * 150 + 825);
+      } else if (length < 20) {
+        dancer.setPosition(Math.random() * 150 + 450, Math.random() * 150 + 1100);
+      } else {
+        dancer.setPosition(Math.random() * 50 + 50, Math.random() * 200 + 100);
+      }
+    } else {
+      dancer.setPosition(dancer.top, dancer.left);
+    }
+  };
 });
-
