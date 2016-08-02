@@ -39,9 +39,8 @@ body, a:link, a:visited, a:active{
   border-radius:10px;
   width: 0px;
   height: 0px;
-  position: flex;
-/*  position:absolute;
-*/}
+  position: relative;
+}
 
 .expanding{
   border:100px solid blue;
@@ -49,11 +48,13 @@ body, a:link, a:visited, a:active{
 }
 .lineup {
   display: flex;
-  position: flex;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 20%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  height: 0;
+  width: 0;
   padding: 1em;
+  justify-content: center;
   align-content: space-between;
 }
