@@ -6,8 +6,12 @@ body{
   margin: 0px;
   max-height: 960px;
   max-width: 1440px;
-  background-color:#444;
   font-size: 18px;
+  /*background-image: url('https://i.vimeocdn.com/video/460516322_1280x720.jpg');*/
+  background-image: url('src/warriors_court.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
 }
 body, a:link, a:visited, a:active{
   color: lightblue;
@@ -33,13 +37,16 @@ body, a:link, a:visited, a:active{
 }
 
 .dancer{
-  border-width:10px;
+  background-image: url('src/crying_jordan_face.png');
+  background-size: contain;
+/*  border-width:10px;
   border-style: solid;
   border-color: red;
-  border-radius:10px;
-  width: 0px;
-  height: 0px;
-  position: relative;
+  border-radius:10px;*/
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  display: block;
 }
 
 .expanding{
@@ -48,13 +55,12 @@ body, a:link, a:visited, a:active{
 }
 .lineup {
   display: flex;
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
-  text-align: center;
-  height: 0;
-  width: 0;
-  padding: 1em;
-  justify-content: center;
+  /*text-align: center;*/
+  height: 0px;
+  width: 0px;
+  /*justify-content: space-between;*/
   align-content: space-between;
 }

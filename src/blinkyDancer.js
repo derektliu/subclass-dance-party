@@ -14,7 +14,7 @@ BlinkyDancer.prototype.step = function() {
   // toggle() is a jQuery method to show/hide the <span> tag.
   // See http://api.jquery.com/category/effects/ for this and
   // other effects you can use on a jQuery-wrapped html tag.
-  if(this.$node.css('visibility') === 'hidden'){
+  if (this.$node.css('visibility') === 'hidden') {
     this.$node.css('visibility', 'visible');
   } else {
     this.$node.css('visibility', 'hidden');
@@ -24,10 +24,11 @@ BlinkyDancer.prototype.step = function() {
 
 var MovingBlinkyDancer = function(top, left, timeBetweenSteps) {
   BlinkyDancer.call(this, top, left, timeBetweenSteps);
+  this.$node.css('background-image', 'url("src/Basketball.png")');
   setInterval( function() {    
     this.$node.animate({
-      left: "+=50",
-      top: "+=50",
+      left: '+=50',
+      top: '+=50',
     }); 
   }.bind(this), 50);
     
@@ -49,12 +50,12 @@ var ExpandingBlinkyDancer = function(top, left, timeBetweenSteps) {
   this.$node.addClass('expanding');
   this.setPosition(top, left);
   setInterval( function() {
-    if(parseInt(this.$node.css('border-width')) > 200) { 
-    }else {
+    if (parseInt(this.$node.css('border-width')) > 200) { 
+    } else {
       console.log(parseInt(this.$node.css('border-width')));
       this.$node.animate({
-        'border-width' : "+=5",
-        'border-radius': "+=5"
+        'border-width': '+=5',
+        'border-radius': '+=5'
       });
     }
   }.bind(this), 200);
