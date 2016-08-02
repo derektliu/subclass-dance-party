@@ -4,8 +4,8 @@ body, html{
 
 body{
   margin: 0px;
-  max-height: 960px;
-  max-width: 1440px;
+  height: 960;
+  width: 1440;
   font-size: 18px;
   background-image: url('./img/warriors_court.png');
   background-size: 100% 100%;

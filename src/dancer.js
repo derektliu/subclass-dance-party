@@ -21,4 +21,5 @@ Dancer.prototype.setPosition = function(top, left) {
     left: left
   };
   this.$node.animate(styleSettings, 500);
+  console.log('setPosition', top, left);
 };
