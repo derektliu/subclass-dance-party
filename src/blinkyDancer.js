@@ -18,6 +18,15 @@ BlinkyDancer.prototype.step = function() {
   }
 };
 
+var RotatingDancer = function(top, left, timeBetweenSteps) {
+  Dancer.call(this, top, left, timeBetweenSteps);
+  this.$node.addClass('rotating');
+  // this.setPosition(top, left);  
+};
+
+RotatingDancer.prototype = Object.create(Dancer.prototype);
+RotatingDancer.prototype.constructor = RotatingDancer;
+
 
 // var MovingBlinkyDancer = function(top, left, timeBetweenSteps) {
 //   BlinkyDancer.call(this, top, left, timeBetweenSteps);
@@ -44,18 +53,17 @@ BlinkyDancer.prototype.step = function() {
 
 var ExpandingBlinkyDancer = function(top, left, timeBetweenSteps) {
   Dancer.call(this, top, left, timeBetweenSteps);
-  this.$node.addClass('expanding');
-  this.setPosition(top, left);
+  // this.$node.addClass('expanding');
+  // this.setPosition(top, left);
   setInterval( function() {
-    if (parseInt(this.$node.css('border-width')) > 200) { 
+    if (this.$node.css('height') > 300) { 
     } else {
-      console.log(parseInt(this.$node.css('border-width')));
       this.$node.animate({
-        'border-width': '+=5',
-        'border-radius': '+=5'
+        'height': '+=50',
+        'width': '+=50'
       });
     }
-  }.bind(this), 200);
+  }.bind(this), 1000);
   
 };
 
@@ -113,10 +121,10 @@ Basketball.prototype.step = function() {
 
   Dancer.prototype.step.call(this);
   if (this.bounce) {
-    this.$node.animate({'top': this.top+50}, this.timeBetweenSteps);
+    this.$node.animate({'top': this.top + 50}, this.timeBetweenSteps);
     this.bounce = false;
   } else {
-    this.$node.animate({'top': this.top-50}, this.timeBetweenSteps);
+    this.$node.animate({'top': this.top - 50}, this.timeBetweenSteps);
     this.bounce = true;
   }
 };
