@@ -1,7 +1,10 @@
 $(document).ready(function() {
   window.dancers = [];
   var lineupOn = false;
-  var memeFaces = ['<img src="./img/Jordan.png" height="100px" width="75"></img>'];
+  var memeFaces = ['<img src="./img/Jordan.png" height="100" width="75"></img>', '<img src="./img/Lebron.png" height="100" width="100"></img>', '<img src="./img/Yao.gif" height="100" width="75"></img>', '<img src="./img/Curry.png" height="100" width="80"></img>', '<img src="./img/Chalmers.png" height="100" width="75"></img>','<img src="./img/Basketball.png" height="100" width="100"></img>'];
+  var memeSelector = function() {
+    return Math.floor(Math.random() * 6);
+  };
 
   $('.addDancerButton').on('click', function(event) {
 
@@ -18,10 +21,19 @@ $(document).ready(function() {
       Math.random() * 1000 + 1000
     );
 
-    dancer.$node.append(memeFaces[0]);
+    dancer.$node.append(memeFaces[memeSelector()]);
     window.dancers.push(dancer);
-    console.log(lineupOn);
-    lineUp(dancer, window.dancers.length-1);
+
+    dancer.$node.hover(function() {
+      dancer.imgheight = dancer.$node.children('img').attr('height');
+      dancer.imgwidth = dancer.$node.children('img').attr('width');
+      console.log(dancer.imgheight, dancer.imgwidth);
+      dancer.$node.children('img').animate({'height': dancer.imgheight * 2, 'width': dancer.imgwidth * 2});
+    }, function() {
+      dancer.$node.children('img').animate({'height': dancer.imgheight, 'width': dancer.imgwidth});
+    });
+
+    lineUp(dancer, window.dancers.length - 1);
 
     $('body').append(dancer.$node);
 
@@ -44,11 +56,11 @@ $(document).ready(function() {
   var lineUp = function(dancer, length) {
     if (lineupOn) { 
       if (length < 5) {
-        dancer.setPosition(Math.random() * 100 + 300, Math.random() * 150 + 400);
+        dancer.setPosition(Math.random() * 250 + 250, Math.random() * 300 + 350);
       } else if (length < 10) {
-        dancer.setPosition(Math.random() * 100 + 75, Math.random() * 150 + 825);
+        dancer.setPosition(Math.random() * 150 + 75, Math.random() * 200 + 825);
       } else if (length < 20) {
-        dancer.setPosition(Math.random() * 150 + 450, Math.random() * 150 + 1100);
+        dancer.setPosition(Math.random() * 200 + 450, Math.random() * 200 + 1100);
       } else {
         dancer.setPosition(Math.random() * 50 + 50, Math.random() * 200 + 100);
       }
