@@ -1,27 +1,59 @@
 body, html{
   height:100%;
 }
+
 body{
   margin: 0px;
+  max-height: 960px;
+  max-width: 1440px;
   background-color:#444;
   font-size: 18px;
 }
 body, a:link, a:visited, a:active{
   color: lightblue;
 }
+
 .title, .addDancerButton{
   padding:5px 12px;
   float:right;
 }
+
+.dancerLineupButton {
+  padding:5px 12px;
+  float:right;
+}
+
 .topbar{
   height:32px;
   background-color: #555;
+  width:100%;
 }
 .title{
   background-color: #777;
 }
+
 .dancer{
-  border:10px solid red;
+  border-width:10px;
+  border-style: solid;
+  border-color: red;
   border-radius:10px;
-  position:absolute;
+  width: 0px;
+  height: 0px;
+  position: flex;
+/*  position:absolute;
+*/}
+
+.expanding{
+  border:100px solid blue;
+  border-radius: 100px;
+}
+.lineup {
+  display: flex;
+  position: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  padding: 1em;
+  align-content: space-between;
 }
