@@ -1,5 +1,6 @@
 $(document).ready(function() {
   window.dancers = [];
+  var lineupOn = false;
 
   $('.addDancerButton').on('click', function(event) {
     /* This function sets up the click handlers for the create-dancer
@@ -28,6 +29,8 @@ $(document).ready(function() {
       Math.random() * 1000
     );
 
+    window.dancers.push(dancer);
+
     if (lineupOn) {
       $('.lineup').append(dancer.$node);
     } else {
@@ -35,17 +38,15 @@ $(document).ready(function() {
     }
 
   });
-  var lineupOn = false;
+  
   $('.dancerLineupButton').on('click', function(event) {
     if (!lineupOn) { 
-      $('.dancer').addClass('noPosition');
-      $('.dancer').css('position', 'relative');
-      $('.lineup').append($('.dancer').detach());
+      for (var i = 0; i < window.dancers.length; i++) {
+        window.dancers[i].setPosition(100, 100);
+      }
       lineupOn = true;
     } else {
-      $('.dancer').removeClass('noPosition');
-      $('.dancer').css('position', 'absolute');
-      $('body').append($('.dancer').detach());
+      window.dancers[i].setPosition(window.dancers[i].top, window.dancers[i].left);
       lineupOn = false;
     }
 
