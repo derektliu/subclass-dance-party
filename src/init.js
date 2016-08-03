@@ -16,24 +16,25 @@ $(document).ready(function() {
   '<img src="./img/SwaggyP.png" height="100" width="75"></img>',
   '<img src="./img/DeAndre.png" height="100" width="75"></img>',
   '<img src="./img/Melo.png" height="100" width="100"></img>'];
+  var fight = '<img class= "fight" src="./img/fight.png" height="200" width="300"></img>';
   var memeSelector = function() {
     return Math.floor(Math.random() * 9 + 1);
   };  
 
   $('.addMovementButton').on('click', function(event) {
-    console.log(lineupOn);
     if (lineupOn && !playing) {
       if ( window.team1.length === 5 && window.team2.length === 5) {
         interval = setInterval(function() {
-          for (var i = 0; i < 5; i++) { 
+          for (var i = 0; i < window.team1.length; i++) { 
             window.team1[i].setPosition(window.team1[i].randHeight + (Math.random() - 0.5) * 100, window.team1[i].randWidth + (Math.random() - 0.5) * 100);
+          }
+          for (var i = 0; i < window.team2.length; i++) { 
             window.team2[i].setPosition(window.team2[i].randHeight + (Math.random() - 0.5) * 100, window.team2[i].randWidth + (Math.random() - 0.5) * 100);
           }
         }, 500);
         playing = true;
       }
     } else {
-      console.log(interval);
       clearInterval(interval);
       playing = false;
     }
@@ -44,7 +45,6 @@ $(document).ready(function() {
     if (window.team1.length < 5 || window.team2.length < 5) {
 
       var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
-        
       var dancerMakerFunction = window[dancerMakerFunctionName];
 
       var dancer = new dancerMakerFunction(
@@ -56,9 +56,11 @@ $(document).ready(function() {
       dancer.$node.append(memeFaces[memeSelector()]);
 
       if (window.team1.length < 5) {
+        dancer.lineUpNumber = window.team1.length;
         window.team1.push(dancer);
         lineUp(dancer, 'team1');
       } else if (window.team2.length < 5) {
+        dancer.lineUpNumber = window.team2.length;
         window.team2.push(dancer);
         lineUp(dancer, 'team2');
       }
@@ -70,9 +72,45 @@ $(document).ready(function() {
       }, function() {
         dancer.$node.children('img').animate({'height': dancer.imgheight, 'width': dancer.imgwidth});
       });
+      /************************************ Foul ******************************************/
+      dancer.$node.on('click', function(event) {
+        if (playing === true && team1.length === team2.length) {
+
+          var player1 = window.team1[dancer.lineUpNumber];
+          var player2 = window.team2[dancer.lineUpNumber];
+
+          var collisionTop = Math.random() * 300 + 100;
+          var collisionLeft = Math.random() * 500 + 300;
+          if (player1 === undefined) {
+            debugger;
+          }
+          $('body').append(fight);          
+          $('.fight').css({'top': collisionTop, 'left': collisionLeft});
+          player1.setPosition(collisionTop, collisionLeft, 500);
+          player2.setPosition(collisionTop, collisionLeft, 500);
+          // console.log('before: ', window.team1);
+          window.team1.splice(dancer.lineUpNumber, 1);
+          window.team2.splice(dancer.lineUpNumber, 1);
+          for (var i = dancer.lineUpNumber; i < team1.length; i++) {
+            var nextDancer = window.team1[i];
+            nextDancer.lineUpNumber--;
+            var nextDancer = window.team2[i];
+            nextDancer.lineUpNumber--;
+          }
+          // console.log('after: ', window.team1);
+          window.spectators2.push(player1);
+          window.spectators2.push(player2);
+          setTimeout(function() {
+            lineUp(player1, 'spectators2');
+            lineUp(player2, 'spectators2');
+          }, 500);
+        }
+      }); 
 
       $('body').append(dancer.$node);
     }
+
+
 
   });
 
@@ -120,6 +158,7 @@ $(document).ready(function() {
     }
   });
 
+
   var lineUp = function(dancer, loc) {
     if (lineupOn) { 
       if (loc === 'team1') {
@@ -135,7 +174,7 @@ $(document).ready(function() {
         dancer.randHeight = Math.random() * 50 + 50;
         dancer.randWidth = Math.random() * 200 + 100;
       }
-      dancer.setPosition(dancer.randHeight, dancer.randWidth);
+      dancer.setPosition(dancer.randHeight, dancer.randWidth, 100);
     } else {
       dancer.setPosition(dancer.top, dancer.left);
     }

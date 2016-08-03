@@ -47,6 +47,10 @@ span.rotating {
 
 }
 
+.fight{
+  position:absolute;
+}
+
 
 /*.expanding{
   border:100px solid blue;

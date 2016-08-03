@@ -15,10 +15,11 @@ Dancer.prototype.step = function() {
   setTimeout(this.step.bind(this), this.timeBetweenSteps);
 };
 
-Dancer.prototype.setPosition = function(top, left) {
+Dancer.prototype.setPosition = function(top, left, time) {
+  var time = time || 500;
   var styleSettings = {
     top: top,
     left: left
   };
-  this.$node.animate(styleSettings, 500);
+  this.$node.animate(styleSettings, time);
 };
