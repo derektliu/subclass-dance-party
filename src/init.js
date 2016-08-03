@@ -2,12 +2,21 @@ $(document).ready(function() {
   window.dancers = [];
   window.team1 = [];
   window.team2 = [];
-  window.viewers1 = [];
-  window.viewers2 = [];
+  window.spectators1 = [];
+  window.spectators2 = [];
   var lineupOn = false;
-  var memeFaces = ['<img src="./img/Jordan.png" height="100" width="75"></img>', '<img src="./img/Lebron.png" height="100" width="100"></img>', '<img src="./img/Yao.gif" height="100" width="75"></img>', '<img src="./img/Curry.png" height="100" width="80"></img>', '<img src="./img/Chalmers.png" height="100" width="75"></img>', '<img src="./img/Basketball.png" height="100" width="100"></img>'];
+  var memeFaces = ['<img src="./img/Basketball.png" height="100" width="100"></img>',
+  '<img src="./img/Jordan.png" height="100" width="75"></img>',
+  '<img src="./img/Lebron.png" height="100" width="100"></img>',
+  '<img src="./img/Yao.gif" height="100" width="75"></img>',
+  '<img src="./img/Curry.png" height="100" width="80"></img>',
+  '<img src="./img/Chalmers.png" height="100" width="75"></img>',
+  '<img src="./img/Lebron2.png" height="100" width="100"></img>',
+  '<img src="./img/SwaggyP.png" height="100" width="75"></img>',
+  '<img src="./img/DeAndre.png" height="100" width="75"></img>',
+  '<img src="./img/Melo.png" height="100" width="100"></img>'];
   var memeSelector = function() {
-    return Math.floor(Math.random() * 5);
+    return Math.floor(Math.random() * 9 + 1);
   };
 
   $('.addBasketballButton').on('click', function(event) {
@@ -15,7 +24,7 @@ $(document).ready(function() {
     // get the maker function for the kind of dancer we're supposed to make
     var dancerMakerFunction = window[dancerMakerFunctionName];
     var basketball = new dancerMakerFunction(300, 650, 500);
-    basketball.$node.append(memeFaces[5]);
+    basketball.$node.append(memeFaces[0]);
     $('body').append(basketball.$node);
   });
   
@@ -34,11 +43,8 @@ $(document).ready(function() {
   $('.addDancerButton').on('click', function(event) {
 
     var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
-
-    // get the maker function for the kind of dancer we're supposed to make
     var dancerMakerFunction = window[dancerMakerFunctionName];
 
-    // make a dancer with a random position
     var dancer = new dancerMakerFunction(
       $('body').height() * Math.random() * .80,
       $('body').width() * Math.random() * .80,
@@ -46,19 +52,20 @@ $(document).ready(function() {
     );
 
     dancer.$node.append(memeFaces[memeSelector()]);
+    
     if (window.team1.length < 5) {
       window.team1.push(dancer);
       lineUp(dancer, 'team1');
     } else if (window.team2.length < 5) {
       window.team2.push(dancer);
       lineUp(dancer, 'team2');
-    } else if (window.viewers1.length < 10) {
-      window.viewers1.push(dancer);
-      lineUp(dancer, 'viewers1');
+    } /*else if (window.spectators1.length < 10) {
+      window.spectators1.push(dancer);
+      lineUp(dancer, 'spectators1');
     } else {
-      window.viewers2.push(dancer);
-      lineUp(dancer, 'viewers2');
-    }
+      window.spectators2.push(dancer);
+      lineUp(dancer, 'spectators2');
+    }*/
 
     dancer.$node.hover(function() {
       dancer.imgheight = dancer.$node.children('img').attr('height');
@@ -67,6 +74,27 @@ $(document).ready(function() {
     }, function() {
       dancer.$node.children('img').animate({'height': dancer.imgheight, 'width': dancer.imgwidth});
     });
+
+    $('body').append(dancer.$node);
+
+  });
+
+  $('.addSpectatorButton').on('click', function(event) {
+
+    var dancer = new Spectator(
+      $('body').height() * Math.random() * .80,
+      $('body').width() * Math.random() * .80,
+      Math.random() * 1000 + 1000
+    );
+
+    dancer.$node.append(memeFaces[memeSelector()]);
+    if (window.spectators1.length < 10) {
+      window.spectators1.push(dancer);
+      lineUp(dancer, 'spectators1');
+    } else {
+      window.spectators2.push(dancer);
+      lineUp(dancer, 'spectators2');
+    }
 
     $('body').append(dancer.$node);
 
@@ -84,11 +112,11 @@ $(document).ready(function() {
     } for (var i = 0; i < window.team2.length; i++) {
       lineUp(window.team2[i], 'team2');
     }
-    for (var i = 0; i < window.viewers1.length; i++) {
-      lineUp(window.viewers1[i], 'viewers1');
+    for (var i = 0; i < window.spectators1.length; i++) {
+      lineUp(window.spectators1[i], 'spectators1');
     }
-    for (var i = 0; i < window.viewers2.length; i++) {
-      lineUp(window.viewers2[i], 'viewers2');
+    for (var i = 0; i < window.spectators2.length; i++) {
+      lineUp(window.spectators2[i], 'spectators2');
     }
   });
 
@@ -100,13 +128,14 @@ $(document).ready(function() {
       } else if (loc === 'team2') {
         dancer.randHeight = Math.random() * 150 + 75;
         dancer.randWidth = Math.random() * 200 + 825;
-      } else if (loc === 'viewers1') {
+      } else if (loc === 'spectators1') {
         dancer.randHeight = Math.random() * 200 + 450;
         dancer.randWidth = Math.random() * 200 + 1100;
       } else {
         dancer.randHeight = Math.random() * 50 + 50;
         dancer.randWidth = Math.random() * 200 + 100;
       }
+      console.log(dancer.randHeight, dancer.randWidth);
       dancer.setPosition(dancer.randHeight, dancer.randWidth);
     } else {
       dancer.setPosition(dancer.top, dancer.left);
