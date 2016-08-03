@@ -49,8 +49,23 @@ span.rotating {
 
 .fight{
   position:absolute;
+  top: -400px;
+  left: -400px;
+  z-index: 2;
+  visibility:hidden;
 }
 
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 2s linear;
+}
 
 /*.expanding{
   border:100px solid blue;

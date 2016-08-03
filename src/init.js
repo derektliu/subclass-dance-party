@@ -16,11 +16,11 @@ $(document).ready(function() {
   '<img src="./img/SwaggyP.png" height="100" width="75"></img>',
   '<img src="./img/DeAndre.png" height="100" width="75"></img>',
   '<img src="./img/Melo.png" height="100" width="100"></img>'];
-  var fight = '<img class= "fight" src="./img/fight.png" height="200" width="300"></img>';
+  var fight = '<img class= "fight hidden" src="./img/fight.png" height="300" width="300"></img>';
   var memeSelector = function() {
     return Math.floor(Math.random() * 9 + 1);
   };  
-
+  $('body').append(fight);          
   $('.addMovementButton').on('click', function(event) {
     if (lineupOn && !playing) {
       if ( window.team1.length === 5 && window.team2.length === 5) {
@@ -82,12 +82,15 @@ $(document).ready(function() {
           var collisionTop = Math.random() * 300 + 100;
           var collisionLeft = Math.random() * 500 + 300;
           if (player1 === undefined) {
-            debugger;
           }
-          $('body').append(fight);          
-          $('.fight').css({'top': collisionTop, 'left': collisionLeft});
-          player1.setPosition(collisionTop, collisionLeft, 500);
-          player2.setPosition(collisionTop, collisionLeft, 500);
+          player1.setPosition(collisionTop, collisionLeft, 700);
+          player2.setPosition(collisionTop, collisionLeft, 700);
+          setTimeout(function() {
+            $('.fight').css({'top': collisionTop-100, 'left': collisionLeft-100});
+            $('.fight').removeClass('hidden');
+            $('.fight').addClass('visible');
+          }, 500);
+
           // console.log('before: ', window.team1);
           window.team1.splice(dancer.lineUpNumber, 1);
           window.team2.splice(dancer.lineUpNumber, 1);
@@ -103,7 +106,9 @@ $(document).ready(function() {
           setTimeout(function() {
             lineUp(player1, 'spectators2');
             lineUp(player2, 'spectators2');
-          }, 500);
+            $('.fight').removeClass('visible');
+            $('.fight').addClass('hidden');
+          }, 2000);
         }
       }); 
 
@@ -162,19 +167,19 @@ $(document).ready(function() {
   var lineUp = function(dancer, loc) {
     if (lineupOn) { 
       if (loc === 'team1') {
-        dancer.randHeight = Math.random() * 250 + 250;
-        dancer.randWidth = Math.random() * 300 + 350;
+        dancer.randHeight = Math.random() * 450 + 200;
+        dancer.randWidth = Math.random() * 500 + 300;
       } else if (loc === 'team2') {
         dancer.randHeight = Math.random() * 150 + 75;
-        dancer.randWidth = Math.random() * 200 + 825;
+        dancer.randWidth = Math.random() * 300 + 875;
       } else if (loc === 'spectators1') {
-        dancer.randHeight = Math.random() * 200 + 450;
+        dancer.randHeight = Math.random() * 300 + 400;
         dancer.randWidth = Math.random() * 200 + 1100;
       } else {
-        dancer.randHeight = Math.random() * 50 + 50;
-        dancer.randWidth = Math.random() * 200 + 100;
+        dancer.randHeight = Math.random() * 50;
+        dancer.randWidth = Math.random() * 500 + 50;
       }
-      dancer.setPosition(dancer.randHeight, dancer.randWidth, 100);
+      dancer.setPosition(dancer.randHeight, dancer.randWidth, 500);
     } else {
       dancer.setPosition(dancer.top, dancer.left);
     }
