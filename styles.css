@@ -25,15 +25,10 @@ span.rotating {
     100% {-webkit-transform: rotate(0deg);}   
 }
 
-.title, .addDancerButton{
+.title, .addDancerButton, .dancerLineupButton, .addSpectatorButton, .addMovementButton{
   padding:5px 12px;
   float:right;
-}
-
-.dancerLineupButton {
-  padding:5px 12px;
-  float:right;
-}
+},
 
 .topbar{
   height:32px;

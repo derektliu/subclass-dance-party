@@ -5,7 +5,8 @@ $(document).ready(function() {
   window.spectators1 = [];
   window.spectators2 = [];
   var lineupOn = false;
-  var memeFaces = ['<img src="./img/Basketball.png" height="100" width="100"></img>',
+  var playing = false;
+  var memeFaces = ['<img class="basketball" src="./img/Basketball.png" height="100" width="100"></img>',
   '<img src="./img/Jordan.png" height="100" width="75"></img>',
   '<img src="./img/Lebron.png" height="100" width="100"></img>',
   '<img src="./img/Yao.gif" height="100" width="75"></img>',
@@ -17,65 +18,61 @@ $(document).ready(function() {
   '<img src="./img/Melo.png" height="100" width="100"></img>'];
   var memeSelector = function() {
     return Math.floor(Math.random() * 9 + 1);
-  };
-
-  $('.addBasketballButton').on('click', function(event) {
-    var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
-    // get the maker function for the kind of dancer we're supposed to make
-    var dancerMakerFunction = window[dancerMakerFunctionName];
-    var basketball = new dancerMakerFunction(300, 650, 500);
-    basketball.$node.append(memeFaces[0]);
-    $('body').append(basketball.$node);
-  });
-  
+  };  
 
   $('.addMovementButton').on('click', function(event) {
-    if (lineupOn && window.team1.length === 5 && window.team2.length === 5) {
-      setInterval(function() {
-        for (var i = 0; i < 5; i++) { 
-          window.team1[i].setPosition(window.team1[i].randHeight + (Math.random() - 0.5) * 100, window.team1[i].randWidth + (Math.random() - 0.5) * 100);
-          window.team2[i].setPosition(window.team2[i].randHeight + (Math.random() - 0.5) * 100, window.team2[i].randWidth + (Math.random() - 0.5) * 100);
-        }
-      }, 500);
+    console.log(lineupOn);
+    if (lineupOn && !playing) {
+      if ( window.team1.length === 5 && window.team2.length === 5) {
+        interval = setInterval(function() {
+          for (var i = 0; i < 5; i++) { 
+            window.team1[i].setPosition(window.team1[i].randHeight + (Math.random() - 0.5) * 100, window.team1[i].randWidth + (Math.random() - 0.5) * 100);
+            window.team2[i].setPosition(window.team2[i].randHeight + (Math.random() - 0.5) * 100, window.team2[i].randWidth + (Math.random() - 0.5) * 100);
+          }
+        }, 500);
+        playing = true;
+      }
+    } else {
+      console.log(interval);
+      clearInterval(interval);
+      playing = false;
     }
   });
 
   $('.addDancerButton').on('click', function(event) {
 
-    var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
-    var dancerMakerFunction = window[dancerMakerFunctionName];
+    if (window.team1.length < 5 || window.team2.length < 5) {
 
-    var dancer = new dancerMakerFunction(
-      $('body').height() * Math.random() * .80,
-      $('body').width() * Math.random() * .80,
-      Math.random() * 1000 + 1000
-    );
+      var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
+        
+      var dancerMakerFunction = window[dancerMakerFunctionName];
 
-    dancer.$node.append(memeFaces[memeSelector()]);
-    
-    if (window.team1.length < 5) {
-      window.team1.push(dancer);
-      lineUp(dancer, 'team1');
-    } else if (window.team2.length < 5) {
-      window.team2.push(dancer);
-      lineUp(dancer, 'team2');
-    } /*else if (window.spectators1.length < 10) {
-      window.spectators1.push(dancer);
-      lineUp(dancer, 'spectators1');
-    } else {
-      window.spectators2.push(dancer);
-      lineUp(dancer, 'spectators2');
-    }*/
+      var dancer = new dancerMakerFunction(
+        $('body').height() * Math.random() * .80,
+        $('body').width() * Math.random() * .80,
+        Math.random() * 1000 + 1000
+      );
 
-    dancer.$node.hover(function() {
-      dancer.imgheight = dancer.$node.children('img').attr('height');
-      dancer.imgwidth = dancer.$node.children('img').attr('width');
-      dancer.$node.children('img').animate({'height': dancer.imgheight * 2, 'width': dancer.imgwidth * 2});
-    }, function() {
-      dancer.$node.children('img').animate({'height': dancer.imgheight, 'width': dancer.imgwidth});
-    });
+      dancer.$node.append(memeFaces[memeSelector()]);
 
-    $('body').append(dancer.$node);
+      if (window.team1.length < 5) {
+        window.team1.push(dancer);
+        lineUp(dancer, 'team1');
+      } else if (window.team2.length < 5) {
+        window.team2.push(dancer);
+        lineUp(dancer, 'team2');
+      }
+
+      dancer.$node.hover(function() {
+        dancer.imgheight = dancer.$node.children('img').attr('height');
+        dancer.imgwidth = dancer.$node.children('img').attr('width');
+        dancer.$node.children('img').animate({'height': dancer.imgheight * 2, 'width': dancer.imgwidth * 2});
+      }, function() {
+        dancer.$node.children('img').animate({'height': dancer.imgheight, 'width': dancer.imgwidth});
+      });
+
+      $('body').append(dancer.$node);
+    }
 
   });
 
@@ -102,9 +99,12 @@ $(document).ready(function() {
   
   $('.dancerLineupButton').on('click', function(event) {
     if (!lineupOn) {
+      var basketball = new Basketball(300, 650, 500);
+      basketball.$node.append(memeFaces[0]);
+      $('body').append(basketball.$node);
       lineupOn = true;
-
     } else {
+      $('.basketball').remove();
       lineupOn = false;
     }
     for (var i = 0; i < window.team1.length; i++) {
@@ -135,7 +135,6 @@ $(document).ready(function() {
         dancer.randHeight = Math.random() * 50 + 50;
         dancer.randWidth = Math.random() * 200 + 100;
       }
-      console.log(dancer.randHeight, dancer.randWidth);
       dancer.setPosition(dancer.randHeight, dancer.randWidth);
     } else {
       dancer.setPosition(dancer.top, dancer.left);
